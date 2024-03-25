@@ -86,13 +86,12 @@ def uniform_cost_search(start: Point, goal: Point) -> int:
         if(current == goal):
             return cost_so_far
         
-        if(current not in explored):
-            explored.add(current)
-            for l in current.lines:
-                next = l.next_of(current)
-                if(next not in explored):
-                    new_cost = cost_so_far + l.cost
-                    frontier.put(PointAndCost(new_cost, next))
+        explored.add(current)
+        for l in current.lines:
+            next = l.next_of(current)
+            if(next not in explored):
+                new_cost = cost_so_far + l.cost
+                frontier.put(PointAndCost(new_cost, next))
     return None
                 
 
