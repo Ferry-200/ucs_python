@@ -70,7 +70,7 @@ class PointAndCost:
         self.point = point
         
     # define the '<' operation between PointAndCosts
-    # the PriorityQueue need '<' operation to compare items in the queue when sorting the queue
+    # the PriorityQueue need '<' operation to compare items when sorting the queue
     def __lt__(self, other):
         return self.cost < other.cost
 
