@@ -78,12 +78,24 @@ def uniform_cost_search(start: Point, goal: Point) -> int:
     frontier = PriorityQueue[PointAndCost]()
     frontier.put(PointAndCost(0, start))
     explored = set[Point]()
+
+    # save the path
+    # the path is saved as a -> b, b -> c, c -> d, ...
+    # the function build_path() will turn it into a list like [a, b, c, d, ...],
+    # which is easier to read
+    came_from = dict[Point, Point]()
+    came_from[start] = None
+
     while(not frontier.empty()):
         current_state = frontier.get()
         cost_so_far = current_state.cost
         current = current_state.point
 
         if(current == goal):
+            path = build_path(came_from, start, goal)
+            for p in path:
+                print(p.name, end=", ")
+            
             return cost_so_far
         
         explored.add(current)
@@ -92,8 +104,19 @@ def uniform_cost_search(start: Point, goal: Point) -> int:
             if(next not in explored):
                 new_cost = cost_so_far + l.cost
                 frontier.put(PointAndCost(new_cost, next))
+                came_from[next] = current
     return None
                 
+
+def build_path(came_from: dict[Point, Point], start: Point, goal: Point) -> list[Point]:
+    curr = goal
+    path = []
+    while curr != start:
+        path.append(curr)
+        curr = came_from[curr]
+    path.append(start)
+    path.reverse()
+    return path
 
 cost = uniform_cost_search(POINTS["s"], POINTS["g"])
 print(cost)
