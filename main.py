@@ -74,6 +74,16 @@ class PointAndCost:
     def __lt__(self, other):
         return self.cost < other.cost
 
+def build_path(came_from: dict[Point, Point], start: Point, goal: Point) -> list[Point]:
+    curr = goal
+    path = []
+    while curr != start:
+        path.append(curr)
+        curr = came_from[curr]
+    path.append(start)
+    path.reverse()
+    return path
+
 def uniform_cost_search(start: Point, goal: Point) -> int:
     frontier = PriorityQueue[PointAndCost]()
     frontier.put(PointAndCost(0, start))
@@ -106,17 +116,6 @@ def uniform_cost_search(start: Point, goal: Point) -> int:
                 frontier.put(PointAndCost(new_cost, next))
                 came_from[next] = current
     return None
-                
-
-def build_path(came_from: dict[Point, Point], start: Point, goal: Point) -> list[Point]:
-    curr = goal
-    path = []
-    while curr != start:
-        path.append(curr)
-        curr = came_from[curr]
-    path.append(start)
-    path.reverse()
-    return path
 
 cost = uniform_cost_search(POINTS["s"], POINTS["g"])
 print(cost)
