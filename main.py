@@ -118,4 +118,4 @@ def uniform_cost_search(start: Point, goal: Point) -> int:
     return None
 
 cost = uniform_cost_search(POINTS["s"], POINTS["g"])
-print(cost)
+print(f"cost: {cost}")
